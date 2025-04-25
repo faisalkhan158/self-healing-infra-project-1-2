@@ -55,4 +55,4 @@ docker-compose up -d --build
 ```bash
 docker stop nginx-app
 
-# see the magic of Auto-healing
+see the magic of Auto-healing
