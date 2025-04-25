@@ -1,0 +1,34 @@
+ubuntu@ip-172-31-4-6:~/self-healing-infra$ docker logs -f webhook
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.112.3:5001
+Press CTRL+C to quit
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [Restart NGINX Container] *************************************************
+
+TASK [Restart nginx container] *************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+192.168.112.2 - - [25/Apr/2025 10:43:22] "POST / HTTP/1.1" 200 -
+192.168.112.2 - - [25/Apr/2025 10:44:19] "POST / HTTP/1.1" 200 -
+
+ubuntu@ip-172-31-4-6:~/self-healing-infra$ docker logs -f self-healing-infra_alertmanager_1
+time=2025-04-25T10:07:23.298Z level=INFO source=main.go:191 msg="Starting Alertmanager" version="(version=0.28.1, branch=HEAD, revision=b2099eaa2c9ebc25edb26517cb9c732738e93910)"
+time=2025-04-25T10:07:23.298Z level=INFO source=main.go:192 msg="Build context" build_context="(go=go1.23.7, platform=linux/amd64, user=root@fa3ca569dfe4, date=20250307-15:05:18, tags=netgo)"
+time=2025-04-25T10:07:23.298Z level=INFO source=cluster.go:185 msg="setting advertise address explicitly" component=cluster addr=192.168.112.2 port=9094
+time=2025-04-25T10:07:23.320Z level=INFO source=cluster.go:674 msg="Waiting for gossip to settle..." component=cluster interval=2s
+time=2025-04-25T10:07:23.383Z level=INFO source=coordinator.go:112 msg="Loading configuration file" component=configuration file=/etc/alertmanager/alertmanager.yml
+time=2025-04-25T10:07:23.386Z level=INFO source=coordinator.go:125 msg="Completed loading of configuration file" component=configuration file=/etc/alertmanager/alertmanager.yml
+time=2025-04-25T10:07:23.393Z level=INFO source=tls_config.go:347 msg="Listening on" address=[::]:9093
+time=2025-04-25T10:07:23.393Z level=INFO source=tls_config.go:350 msg="TLS is disabled." http2=false address=[::]:9093
+time=2025-04-25T10:07:25.321Z level=INFO source=cluster.go:699 msg="gossip not settled" component=cluster polls=0 before=0 now=1 elapsed=2.00087337s
+time=2025-04-25T10:07:33.323Z level=INFO source=cluster.go:691 msg="gossip settled; proceeding" component=cluster elapsed=10.003008866s
