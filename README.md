@@ -42,17 +42,18 @@ A self-healing infrastructure project that detects service failures using Promet
 Mohammed Faisal Khan
 
 ## 🧪 How to Run This Project
-```bash
-# Clone the repository
-git clone https://github.com/faisalkhan158/self-healing-infra-project-1-2
-cd self-healing-infra-project-1-2
 
-# Start all services
-```bash
-docker-compose up -d --build
+- Clone the repository
+  ```bash
+  git clone https://github.com/faisalkhan158/self-healing-infra-project-1-2
+  cd self-healing-infra-project-1-2
 
-# To test the auto-heal:
-```bash
-docker stop nginx-app
+- Start all services
+  ```bash
+  docker-compose up -d --build
 
-see the magic of Auto-healing
+- To test the auto-heal:
+  ```bash
+  docker stop nginx-app
+
+## see the magic of Auto-healing
