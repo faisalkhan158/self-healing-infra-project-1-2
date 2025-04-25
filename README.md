@@ -56,4 +56,4 @@ Mohammed Faisal Khan
   ```bash
   docker stop nginx-app
 
-## see the magic of Auto-healing
+## See the magic of Auto-healing
