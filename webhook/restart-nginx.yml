@@ -1,0 +1,12 @@
+---
+- name: Restart NGINX Container
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Restart nginx container
+      community.docker.docker_container:
+        name: nginx-app
+        state: started
+        restart: true
