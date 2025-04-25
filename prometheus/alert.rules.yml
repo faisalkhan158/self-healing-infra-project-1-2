@@ -1,0 +1,11 @@
+groups:
+  - name: nginx-alerts
+    rules:
+      - alert: NginxDown
+        expr: nginx_up == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "NGINX Exporter is reporting NGINX is down"
+          description: "The NGINX Exporter on {{ $labels.instance }} reports NGINX is DOWN."
