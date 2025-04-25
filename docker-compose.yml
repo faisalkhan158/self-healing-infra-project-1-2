@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    depends_on:
+      - nginx-exporter
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - 9093:9093
+
+  nginx-app:
+    image: nginx
+    container_name: nginx-app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter
+    ports:
+      - "9113:9113"
+    command:
+      - '-nginx.scrape-uri=http://nginx-app:80/stub_status'
+    depends_on:
+      nginx-app:
+        condition: service_healthy
+
+  webhook:
+    build: ./webhook
+    container_name: webhook
+    volumes:
+      - ./webhook:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /app
+    command: python3 app.py
+    ports:
+      - "5001:5001"
