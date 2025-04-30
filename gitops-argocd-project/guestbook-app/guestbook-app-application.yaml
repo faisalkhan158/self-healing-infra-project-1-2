@@ -6,12 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/faisalkhan158/self-healing-infra-project-1-2.git'
+    repoURL: https://github.com/faisalkhan158/self-healing-infra-project-1-2.git
     targetRevision: HEAD
     path: gitops-argocd-project/guestbook-app
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: default
+    server: https://kubernetes.default.svc
+    namespace: guestbook
   syncPolicy:
-    automated: {}
- 
+    automated:
+      prune: true
+      selfHeal: true
