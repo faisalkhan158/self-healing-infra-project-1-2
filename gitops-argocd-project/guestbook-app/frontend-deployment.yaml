@@ -17,9 +17,6 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: gcr.io/google-samples/gb-frontend:v4
+        image: faisalkhan15/guestbook-app:v1
         ports:
-        - containerPort: 80
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
+        - containerPort: 3000
