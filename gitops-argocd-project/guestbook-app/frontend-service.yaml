@@ -4,7 +4,7 @@ metadata:
   name: guestbook-frontend
   namespace: guestbook
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 80
   selector:
