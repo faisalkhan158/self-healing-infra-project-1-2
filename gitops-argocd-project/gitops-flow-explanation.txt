@@ -1,0 +1,46 @@
+GitOps Flow Explanation (ArgoCD + Kubernetes)
+This project demonstrates a GitOps pipeline using ArgoCD to manage Kubernetes application deployments.
+
+1. What is GitOps?
+GitOps is a modern way of managing infrastructure and application deployments using Git as a single source of truth. With GitOps, all configuration and deployment changes are tracked as version-controlled code, and tools like ArgoCD ensure that the actual state in Kubernetes always matches the desired state stored in Git.
+
+
+2. How GitOps Works in This Project
+
+• All Kubernetes manifest files for the Guestbook application are stored in a GitHub repository.
+
+• An ArgoCD Application is created to continuously monitor a specific GitHub path.
+
+• When a change is made in the repo (e.g., updating the image version), ArgoCD detects the change.
+
+• ArgoCD auto-syncs the updated manifests and applies the changes to the Kubernetes cluster.
+
+• The ArgoCD UI reflects the live sync status and history.
+
+
+3. GitOps Flow Followed in This Project
+
+• Deployed ArgoCD on a local Kubernetes cluster using Minikube.
+
+• Created an ArgoCD Application resource pointing to guestbook-app manifests in the GitHub repo.
+
+• Deployed the application, which synced successfully and appeared as "Healthy" in the ArgoCD UI.
+
+• Updated the frontend image version in the deployment YAML.
+
+• Committed and pushed the change to GitHub.
+
+• ArgoCD automatically detected the change and synced the new image to the cluster.
+
+• Observed the updated application behavior without any manual kubectl commands.
+
+
+4. Benefits Experienced
+
+• No need to manually apply manifests using kubectl.
+
+• All changes are auditable and version-controlled in Git.
+
+• Easy rollback and history tracking.
+
+• Clean separation between development and operations.
