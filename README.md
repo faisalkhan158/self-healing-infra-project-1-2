@@ -55,6 +55,9 @@ ArgoCD, Minikube, GitHub, Docker, kubectl
 
 > **Note:** This repo is structured as per internship guidelines — both projects are placed in a single repository with individual directories, readmes, screenshots, and required deliverables.
 
+## 🧠 Author
+Mohammed Faisal Khan
+
 ---
 
 Thanks for checking out the projects! Feel free to explore and give a ⭐ if you found it helpful!
