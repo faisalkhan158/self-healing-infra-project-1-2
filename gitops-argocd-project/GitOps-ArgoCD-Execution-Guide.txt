@@ -1,0 +1,96 @@
+GitOps Execution Guide – Guestbook App with ArgoCD & Kubernetes
+
+Overview:
+This document explains how to set up and execute the GitOps pipeline using ArgoCD on a local Kubernetes (Minikube) cluster. The guestbook frontend application is deployed and managed automatically using Git as the single source of truth.
+
+1. Tools and Technologies:
+- Kubernetes (Minikube)
+- ArgoCD (GitOps continuous delivery)
+- Docker
+- GitHub (for version control and manifest storage)
+- Guestbook app (simple web app using nodejs)
+
+2. Minikube and ArgoCD Setup:
+
+a) Install Minikube (Linux example):
+$ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+b) Start Minikube:
+$ minikube start --driver=docker
+
+c) Verify status:
+$ minikube status
+
+d) Install ArgoCD:
+$ kubectl create namespace argocd
+$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+e) Access ArgoCD UI:
+$ kubectl port-forward svc/argocd-server -n argocd 8080:443
+Open browser at: https://localhost:8080
+
+f) Login credentials:
+Username: admin
+Password:
+$ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
+
+3. Cloning and Preparing GitHub Repo:
+
+a) Clone original repo:
+$ git clone https://github.com/faisalkhan158/self-healing-infra-project-1-2.git
+
+b) Navigate to GitOps project:
+$ cd self-healing-infra-project-1-2/gitops-argocd-project
+
+c) Push to your own GitHub repo:
+- Create a new GitHub repository (e.g., `gitops-guestbook`)
+- Change remote origin:
+$ git remote remove origin
+$ git remote add origin https://github.com/your-username/gitops-guestbook.git
+$ git push -u origin main
+
+4. Modify ArgoCD Application Manifest:
+
+Edit the following field in `guestbook-app-application.yaml`:
+
+repoURL: 'https://github.com/your-username/gitops-guestbook.git'
+
+Then apply the manifest:
+$ kubectl apply -f guestbook-app/guestbook-app-application.yaml -n argocd
+
+5. Application Folder Structure:
+
+guestbook-app/
+├── namespace.yaml
+├── guestbook-app-application.yaml
+├── frontend-deployment.yaml
+├── frontend-service.yaml
+
+6. Accessing the Application:
+
+Option 1: Port forwarding (inside guestbook namespace):
+$ kubectl port-forward svc/guestbook-frontend 8080:80 -n guestbook
+Open browser at http://localhost:8080
+
+7. Testing GitOps Auto-Sync:
+
+- Edit `frontend-deployment.yaml` and change the image tag:
+  Example: change from `faisalkhan15/guestbook-app:v1` to `faisalkhan15/guestbook-app:v2`
+
+- Commit and push the change to GitHub:
+$ git add .
+$ git commit -m "Update image tag to trigger ArgoCD sync"
+$ git push
+
+- ArgoCD UI will automatically detect and apply the changes.
+- Observe rollout in ArgoCD dashboard (should show "Synced" and new pods).
+
+8. Summary:
+
+- All deployments are declarative and managed via Git.
+- ArgoCD continuously monitors and syncs the cluster with your Git repo.
+- Manual kubectl apply is only needed once to register the Application.
+- After that, all changes are handled by GitOps.
+
+End of File
