@@ -10,3 +10,4 @@
         name: nginx-app
         state: started
         restart: true
+ 
