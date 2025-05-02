@@ -1,59 +1,60 @@
-# Self-Healing Infrastructure with Prometheus, Alertmanager & Ansible
+# Self-Healing Infra & GitOps with ArgoCD 🚀
 
-## 🚀 Overview
-A self-healing infrastructure project that detects service failures using Prometheus and Alertmanager and automatically resolves them using Ansible.
+This repository contains two DevOps projects that demonstrate modern automation and GitOps principles using Prometheus, Alertmanager, Ansible, ArgoCD, and Kubernetes.
 
-## 🔧 Tech Stack
-- Prometheus
-- Alertmanager
-- Docker & Docker Compose
-- Ansible
-- Flask (Python webhook)
-- NGINX
+---
 
-## 📦 Features
-- Monitors NGINX availability via NGINX Exporter.
-- Sends alerts using Alertmanager.
-- Executes an Ansible playbook to restart NGINX when it goes down.
-- Clean and modular Docker-based setup.
+## 📁 Projects Included
 
-## 🚀 How It Works
-1. **NGINX container** is deployed and monitored using **NGINX Prometheus Exporter**.
-2. **Prometheus** scrapes metrics and triggers an alert when NGINX exporter is down.
-3. **Alertmanager** sends this alert to a **custom Flask webhook**.
-4. The **webhook** runs an **Ansible playbook** that restarts the NGINX container — achieving self-healing.
+### 1. **Self-Healing Infrastructure with Prometheus, Alertmanager & Ansible** 🛠️
 
-## 📂 Project Structure
-- `prometheus/` — Configs for Prometheus and alert rules
-- `alertmanager/` — Alertmanager config with webhook
-- `webhook/` — Python Flask app, Ansible playbook and Dockerfile
-- `nginx/` — NGINX config
-- `docker-compose.yml` — Everything bundled here
+**Objective:** Automatically detect service failures and recover them using alerts and automation.
 
-## ✅ Output
-- Alert fired on Prometheus
-- Webhook triggered and Ansible playbook executed
-- NGINX container automatically restarted
+**Tools Used:**  
+Prometheus, Alertmanager, Python Flask (Webhook), Ansible, Docker, Docker Compose, NGINX, AWS EC2 (Ubuntu)
 
-## 📸 Screenshots
-*(Screenshots available in the `screenshots/` directory)*
+**Highlights:**  
+- Monitors an `nginx-app` using Prometheus.
+- Triggers alerts via Alertmanager when the service is down.
+- Webhook (Flask app) executes an Ansible playbook to restart the container.
+- Fully containerized setup using Docker Compose.
+- Self-healing in action with screenshots and logs.
 
-## 🧠 Author
-Mohammed Faisal Khan
+📁 Project Directory: `self-healing-infra/`  
+📷 Screenshots: `self-healing-infra/screenshots`  
+📄 Project Report: `Self-Healing-Infra-Report.pdf`  
+📜 Readme: [`self-healing-infra/README.md`](./self-healing-infra/README.md)
 
-## 🧪 How to Run This Project
+---
 
-- Clone the repository
-  ```bash
-  git clone https://github.com/faisalkhan158/self-healing-infra-project-1-2
-  cd self-healing-infra-project-1-2
+### 2. **GitOps Workflow using ArgoCD on Kubernetes** ⚙️
 
-- Start all services
-  ```bash
-  docker-compose up -d --build
+**Objective:** Implement GitOps by syncing Kubernetes deployment states directly from a Git repository using ArgoCD.
 
-- To test the auto-heal:
-  ```bash
-  docker stop nginx-app
+**Tools Used:**  
+ArgoCD, Minikube, GitHub, Docker, kubectl
 
-## See the magic of Auto-healing
+**Highlights:**  
+- Built and deployed a custom Guestbook frontend container image.
+- Used ArgoCD to sync Kubernetes manifests from GitHub.
+- Auto-sync tested by updating image version via Git commit.
+- Included notes and screenshots explaining GitOps flow.
+
+📁 Project Directory: `gitops-argocd-project/guestbook-app/`  
+📷 Screenshots: `gitops-argocd-project/screenshots/`  
+📝 GitOps Flow Notes: `GitOps-Flow-Notes.txt`  
+📜 Readme: [`gitops-argocd-project/guestbook-app/README.md`](./gitops-argocd-project/guestbook-app/README.md)
+
+---
+
+## 📌 Final Notes
+
+- ✅ Both projects follow best practices and are well documented.
+- ✅ Fully working implementations tested on local Minikube and AWS EC2.
+- ✅ Ideal for showcasing in interviews and DevOps portfolios.
+
+> **Note:** This repo is structured as per internship guidelines — both projects are placed in a single repository with individual directories, readmes, screenshots, and required deliverables.
+
+---
+
+Thanks for checking out the projects! Feel free to explore and give a ⭐ if you found it helpful!
