@@ -17,3 +17,4 @@ RUN apt-get update && \
 COPY app.py restart-nginx.yml ./
 
 CMD ["python3", "app.py"]
+ 
