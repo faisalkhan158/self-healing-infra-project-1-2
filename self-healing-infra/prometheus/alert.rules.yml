@@ -9,3 +9,4 @@ groups:
         annotations:
           summary: "NGINX Exporter is reporting NGINX is down"
           description: "The NGINX Exporter on {{ $labels.instance }} reports NGINX is DOWN."
+ 
